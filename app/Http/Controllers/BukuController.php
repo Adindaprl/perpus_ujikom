@@ -10,9 +10,40 @@ class BukuController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function dashboard()
     {
-        //
+        return view('admin.dashboard');
+    }
+
+    public function daftarbuku (Request $request){
+        $request->validate([
+            'judul' => 'required',
+            'penulis' => 'required',
+            'penerbit'=> 'required',
+            'tahunTerbit' => 'required',
+            'image' => 'required|image|mimes:png,jpg,jpeg,gif,svg',
+        ]);
+        $image = $request->file('image');
+        $imgName = time().rand().'.'.$image->extension();
+
+        if(!file_exists(public_path('/assets/img/cover/'.$image->getClientOriginalName()))){
+            //set untuk menyimpan file nya
+            $dPath = public_path('/assets/img/cover/');
+            //memindahkan file yang diupload ke directory yang telah ditentukan
+            $image->move($dPath, $imgName);
+            $uploaded = $imgName;
+        }else{
+            $uploaded = $image->getClientOriginalName();
+        }
+
+        Buku::create([
+            'judul' => $request->judul,
+            'penulis'=> $request->penulis,
+            'penerbit'=> $request->penerbit,
+            'tahunTerbit'=> $request->tahunTerbit,
+            'image' => $uploaded,
+        ]);
+        return redirect('/dashboard');
     }
 
     /**

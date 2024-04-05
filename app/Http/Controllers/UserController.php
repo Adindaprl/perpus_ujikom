@@ -73,7 +73,7 @@ class UserController extends Controller
         if (Auth::attempt($user)) {
             return redirect('/landing');
         } else {
-            return redirect('/login')->with('error', 'Gagal login silahkan cek dan coba lagi');
+            return redirect('/')->with('error', 'Gagal login silahkan cek dan coba lagi');
         }
     }
     /**

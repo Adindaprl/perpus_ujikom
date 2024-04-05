@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 </head>
 <body>
-    @yield('content')
     <script src="assets/js/index.js"></script>
 </body>
 </html>
